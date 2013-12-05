@@ -32,12 +32,3 @@ services:
       - [setContainer, [@service_container]]
     tags:
       - { name: twig.extension }
-
-  fervo_image.entry_content_processor:
-    class: Fervo\ImageBundle\EntryContentProcessor\ImageProcessor
-    arguments:
-      - @fervo_image.resolver
-    calls:
-      - [setContainer, [@service_container]]
-    tags:
-      - { name: bloghoven.entry_content_processor, format: html, priority: 50 }

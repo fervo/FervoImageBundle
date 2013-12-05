@@ -1,0 +1,27 @@
+{
+    "name": "fervo/image-bundle",
+    "description": "A bundle for Imagine integration with caching",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Magnus Nordlander",
+            "email": "magnus@fervo.se",
+            "homepage": "http://www.fervo.se/",
+            "role": "Developer"
+        }
+    ],
+    "type": "symfony-bundle",
+    "autoload": {
+        "psr-0": { "Fervo\\ImageBundle": "" }
+    },
+    "target-dir": "Fervo/ImageBundle",
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/framework-bundle": "~2.3",
+        "imagine/Imagine": "dev-master",
+        "knplabs/gaufrette": "0.2.x-dev"
+    },
+    "suggest": {
+        "knplabs/knp-gaufrette-bundle": "For setting up Gaufrette"
+    }
+}
