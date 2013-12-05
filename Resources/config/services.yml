@@ -1,0 +1,43 @@
+services:
+  fervo_image.imagine: ~
+
+  fervo_image.thumbnail_cache:
+    class: Fervo\ImageBundle\ThumbnailCache\ExternallyAvailableGaufretteCache
+    arguments:
+      - @thumbnail_filesystem
+      - %thumbnail_addresses%
+    calls:
+      - [setImagine, [@fervo_image.imagine]]
+
+  fervo_image.resolver:
+    class: Fervo\ImageBundle\Resolver\SymfonyRouterResolver
+    arguments:
+      - @fervo_image.thumbnail_cache
+    calls:
+      - [setRouter, [@router]]
+
+  fervo_image.image_reference.prototype:
+    class: Fervo\ImageBundle\Reference\GaufretteImageReference
+    scope: prototype
+    arguments:
+      - @fervo_image.imagine
+      - @fervo_image.image_source_filesystem
+      - "images/"
+
+  fervo_image.twig_extension:
+    class: Fervo\ImageBundle\Twig\ImageExtension
+    arguments:
+      - @fervo_image.resolver
+    calls:
+      - [setContainer, [@service_container]]
+    tags:
+      - { name: twig.extension }
+
+  fervo_image.entry_content_processor:
+    class: Fervo\ImageBundle\EntryContentProcessor\ImageProcessor
+    arguments:
+      - @fervo_image.resolver
+    calls:
+      - [setContainer, [@service_container]]
+    tags:
+      - { name: bloghoven.entry_content_processor, format: html, priority: 50 }
